@@ -3,8 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
@@ -47,7 +45,6 @@ const AllCategories = () => {
               </DropdownMenuSubContent>
             </DropdownMenuSub>
           </DropdownMenuGroup>
-
           <DropdownMenuItem>Profile</DropdownMenuItem>
           <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Team</DropdownMenuItem>

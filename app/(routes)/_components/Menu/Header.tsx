@@ -35,7 +35,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="flex px-4 mr-2 ml-2 lg:px-32 xl:px-64 justify-between items-center py-4">
+      <div className="border-b lg:border-none flex px-4 mr-2 ml-2 lg:px-32 xl:px-64 justify-between items-center py-4">
         <div className="flex lg:hidden">
           <MobileMenu />
         </div>

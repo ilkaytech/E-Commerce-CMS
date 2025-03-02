@@ -7,8 +7,12 @@ import Cart from "./Cart";
 import AllCategories from "./AllCategories";
 import MainMenu from "./MainMenu";
 import Image from "next/image";
+import { Category } from "@/constans";
+import { getCategories } from "@/actions/getCategories";
 
-const Header = () => {
+const Header = async () => {
+  const categories: Category[] = await getCategories();
+
   return (
     <div className="flex flex-col">
       <div className="h-6 lg:h-8 bg-indigo-500 text-center flex items-center justify-center">
@@ -64,8 +68,8 @@ const Header = () => {
         </div>
       </div>
       <div className="hidden lg:flex py-4 border-b flex-row lg:px-32 xl:px-64 mx-2 items-center justify-between ">
-        <AllCategories />
-        <MainMenu />
+        <AllCategories categories={categories} />
+        <MainMenu categories={categories} />
       </div>
     </div>
   );

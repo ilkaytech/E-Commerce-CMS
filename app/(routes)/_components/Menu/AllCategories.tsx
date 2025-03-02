@@ -8,10 +8,19 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSub,
   DropdownMenuGroup,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Menu, Settings, User } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
+import Image from "next/image";
+import { APIURL, Category } from "@/constans";
+import Link from "next/link";
+import { slugify } from "@/lib/utils";
 
-const AllCategories = () => {
+interface AllCategoriesProps {
+  categories: Category[];
+}
+
+const AllCategories = ({ categories }: AllCategoriesProps) => {
   return (
     <div>
       <DropdownMenu>
@@ -24,31 +33,75 @@ const AllCategories = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-60 text-slate-600 mt-3">
           <DropdownMenuGroup>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger className="p-3">
-                <User />
-                Profile
-              </DropdownMenuSubTrigger>
-              <DropdownMenuSubContent className="w-60 text-slate-600 ml-1">
-                <DropdownMenuItem>
-                  <Settings />
-                  Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings />
-                  Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings />
-                  Settings
-                </DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
+            {categories.length > 0 ? (
+              categories.map((category) =>
+                Array.isArray(category.subcategories) &&
+                category.subcategories.length > 0 ? (
+                  <DropdownMenuSub key={category.id}>
+                    <DropdownMenuSubTrigger className="p-3">
+                      <Link
+                        href={`/categories/${slugify(category.name)}`}
+                        className="flex flex-row items-center"
+                      >
+                        <Image
+                          src={`${APIURL}/assets/${category.icon}`}
+                          alt=""
+                          width={50}
+                          height={50}
+                          className=" w-8 h-8 "
+                        />
+                        {category.name}
+                      </Link>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent className="w-60 text-slate-600 ml-1">
+                      {category.subcategories.map((subcategory) => (
+                        <DropdownMenuItem
+                          key={subcategory.id}
+                          className="p-3"
+                          asChild
+                        >
+                          <Link
+                            href={`/categories/${slugify(
+                              category.name
+                            )}/${slugify(subcategory.name)}`}
+                          >
+                            {subcategory.name}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                ) : (
+                  <DropdownMenuItem key={category.id} asChild>
+                    <Link
+                      href={`/categories/${slugify(category.name)}`}
+                      className="flex flex-row items-center p-3"
+                    >
+                      {category.icon && (
+                        <Image
+                          src={`${APIURL}/assets/${category.icon}`}
+                          alt=""
+                          width={50}
+                          height={50}
+                          className="w-8 h-8"
+                        />
+                      )}
+                      {category.name}
+                    </Link>
+                  </DropdownMenuItem>
+                )
+              )
+            ) : (
+              <>
+                <DropdownMenuItem>No Categories available</DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem className="text-xs">New Arrivals</DropdownMenuItem>
+          <DropdownMenuItem className="text-xs">
+            Value of the day
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

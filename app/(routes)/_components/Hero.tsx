@@ -5,7 +5,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
@@ -43,7 +42,6 @@ const Hero = ({ slider }: HeroProps) => {
           ))}
         </CarouselContent>
         <CarouselPrevious />
-        <CarouselNext />
       </Carousel>
     </div>
   );
